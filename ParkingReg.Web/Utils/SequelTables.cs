@@ -47,7 +47,7 @@
                 SubmittedBy   INT,
                 FromDate    DATETIME NOT NULL,
                 ToDate      DATETIME NOT NULL,
-
+                Active      BOOLEAN DEFAULT TRUE,
                 FOREIGN KEY (SubmittedBy) REFERENCES WhitelistMails(Id) ON DELETE SET NULL
             );";
         }

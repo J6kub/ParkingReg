@@ -1,5 +1,5 @@
-using KartverketRegister.Auth;
-using KartverketRegister.Utils;
+using ParkingReg.Auth;
+using ParkingReg.Utils;
 using Microsoft.AspNetCore.Identity;
 using MySql.Data.MySqlClient;
 using System.Threading;

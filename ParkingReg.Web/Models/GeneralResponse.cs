@@ -1,4 +1,4 @@
-﻿namespace KartverketRegister.Models
+﻿namespace ParkingReg.Models
 {
     public class GeneralResponse
     {

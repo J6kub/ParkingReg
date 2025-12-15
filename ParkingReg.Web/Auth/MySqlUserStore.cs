@@ -1,4 +1,4 @@
-﻿using KartverketRegister.Utils;
+﻿using ParkingReg.Utils;
 using Microsoft.AspNetCore.Identity;
 using MySql.Data.MySqlClient;
 using System;
@@ -7,7 +7,7 @@ using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace KartverketRegister.Auth
+namespace ParkingReg.Auth
 {
     //brukerlagrin mot MYsql database
     public class MySqlUserStore :

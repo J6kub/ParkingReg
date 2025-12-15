@@ -1,5 +1,5 @@
 ﻿
-using KartverketRegister.Auth;
+using ParkingReg.Auth;
 using Microsoft.AspNetCore.Identity;
 using MySql.Data.MySqlClient;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Xml.Linq;
 
-namespace KartverketRegister.Utils
+namespace ParkingReg.Utils
 {
 	// initiering av database struktur. Lager Database navn, og Sjekker om tabeller eksisterer og lager dem om de ikke gjør det.
     public class SequelInit
@@ -52,7 +52,7 @@ namespace KartverketRegister.Utils
         public void InitDb(bool DoMigration) {
             SequelMigrator seq = new SequelMigrator();
             seq.Open();
-            List<string> TablesToCreate = new List<string> { "Users", "WhitelistMails", "Parkings"};
+            List<string> TablesToCreate = new List<string> { "Users", "WhitelistMails", "Parkings", "Vtk"};
             foreach (var tblName in TablesToCreate)
             {
                 if (!TableExists(tblName))
@@ -68,7 +68,10 @@ namespace KartverketRegister.Utils
                         case "Parkings":
                             seq.CreateTable(SequelTables.Parkings(tblName), tblName);
                             break;
-                        
+                        case "Vtk":
+                            seq.CreateTable(SequelTables.Vtk(tblName), tblName);
+                            break;
+
 
                     }
                 }

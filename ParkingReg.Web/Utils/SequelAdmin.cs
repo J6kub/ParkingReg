@@ -1,6 +1,6 @@
 ﻿using MySql.Data;
 using MySql.Data.MySqlClient;
-namespace KartverketRegister.Utils
+namespace ParkingReg.Utils
 {
 
     // Klasse for migrering av database

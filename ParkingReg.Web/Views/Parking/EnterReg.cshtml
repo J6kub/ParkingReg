@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@Model Models.Vtk
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <input id="regnri" type="text" placeholder="Reg nummer"/>
+    <input id="tkn" value="@Model.Token" type="text" hidden />
+    <button onclick="nextto()">Videre</button>
+</div>
+<script>
+	const ri = document.getElementById("regnri");
+    const tkn = document.getElementById("tkn");
+    function nextto() {
+        const regnri = ri.value;
+        const tknv = tkn.value;
+		window.location.href = `/parking/?t=${tknv}&regnr=${regnri}`;
+    }
+
+</script>

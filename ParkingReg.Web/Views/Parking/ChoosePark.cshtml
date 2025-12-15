@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@Model Models.Vtk
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    
+    <form method="POST" action="/parking/handlepark">
+
+        <input name="Token" value="@Model.Token" type="text" />
+        <input name="Regnr" value="@Model.Regnr" type="text" />
+        <input name="Duration" value="2D_1HR" type="text" />
+        <input type="submit"/>
+    </form>
+    <button>6 hr</button>
+    <button>3 days</button>
+</div>
+<script>
+	
+
+</script>

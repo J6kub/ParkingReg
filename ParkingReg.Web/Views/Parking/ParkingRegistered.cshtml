@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@Model Models.Parking
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h2>Parking for @Model.Regnr has been registered!</h2>
+    <p>From @Model.FromDate</p>
+    <p>To @Model.ToDate</p>
+</div>
+<script>
+	const ri = document.getElementById("regnri");
+    const tkn = document.getElementById("tkn");
+    function nextto() {
+        const regnri = ri.value;
+        const tknv = tkn.value;
+		window.location.href = `/parking/?t=${tknv}regnri=${regnri}`;
+    }
+
+</script>

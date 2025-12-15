@@ -1,4 +1,4 @@
-﻿namespace KartverketRegister.Utils
+﻿namespace ParkingReg.Utils
 {
     public static class Constants
     {

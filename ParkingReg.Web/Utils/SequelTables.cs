@@ -1,4 +1,4 @@
-﻿namespace KartverketRegister.Utils
+﻿namespace ParkingReg.Utils
 {
     //SQL-skript for opprettelse av tabeller i databasen
     public static class SequelTables
@@ -44,11 +44,24 @@
             CREATE TABLE {tableName} (
                 Id          INT AUTO_INCREMENT PRIMARY KEY,
                 Regnr       VARCHAR(10) NOT NULL,
-                SubmittedBy   INT,
+                EmailId     INT,
                 FromDate    DATETIME NOT NULL,
                 ToDate      DATETIME NOT NULL,
                 Active      BOOLEAN DEFAULT TRUE,
-                FOREIGN KEY (SubmittedBy) REFERENCES WhitelistMails(Id) ON DELETE SET NULL
+                FOREIGN KEY (EmailId) REFERENCES WhitelistMails(Id) ON DELETE SET NULL
+            );";
+        }
+
+        public static string Vtk(string tableName)
+        {
+            return @$"
+            CREATE TABLE {tableName} (
+                Id          INT AUTO_INCREMENT PRIMARY KEY,
+                Emailid     INT,
+                Token       VARCHAR(30) NOT NULL UNIQUE,
+                Valid       BOOLEAN DEFAULT TRUE,
+
+                FOREIGN KEY (Emailid) REFERENCES WhitelistMails(Id) ON DELETE SET NULL
             );";
         }
 

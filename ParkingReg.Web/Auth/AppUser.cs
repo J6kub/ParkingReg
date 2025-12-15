@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace KartverketRegister.Auth
+namespace ParkingReg.Auth
 {
     //representerer en bruker i systemet
     public class AppUser : IdentityUser<int>

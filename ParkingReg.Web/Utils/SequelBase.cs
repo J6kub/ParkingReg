@@ -1,9 +1,9 @@
-﻿using KartverketRegister.Auth;
+﻿using ParkingReg.Auth;
 using Microsoft.AspNetCore.Identity;
 using MySql.Data.MySqlClient;
 using System;
 
-namespace KartverketRegister.Utils
+namespace ParkingReg.Utils
 {
     // baseklasse for mySQL-databaseforbindelser
     public class SequelBase : IDisposable

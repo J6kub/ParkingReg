@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace KartverketRegister.Auth
+namespace ParkingReg.Auth
 {
     // We’re faking a full role store — but roles are baked into UserType
     public class MySqlRoleStore : IRoleStore<IdentityRole<int>>

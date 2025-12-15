@@ -1,6 +1,6 @@
 ﻿using MySql.Data;
 using MySql.Data.MySqlClient;
-namespace KartverketRegister.Utils
+namespace ParkingReg.Utils
 {
 
     // Klasse for migrering av database
@@ -24,30 +24,38 @@ namespace KartverketRegister.Utils
                     DropTableTransaction("Users_Copy", transaction);
                     DropTableTransaction("WhitelistMails_Copy", transaction);
                     DropTableTransaction("Parkings_Copy", transaction);
+                    DropTableTransaction("Vtk_Copy", transaction);
 
                     CreateTableTransaction(SequelTables.Users_Table("Users_Copy"), "Users_Copy", transaction);
                     CreateTableTransaction(SequelTables.WhitelistMails("WhitelistMails_Copy"), "WhitelistMails_Copy", transaction);
                     CreateTableTransaction(SequelTables.Parkings("Parkings_Copy"), "Parkings_Copy", transaction);
+                    CreateTableTransaction(SequelTables.Vtk("Vtk_Copy"), "Vtk_Copy", transaction);
 
                     CopyTableDataBulkTransaction("Users", "Users_Copy", transaction);
                     CopyTableDataBulkTransaction("WhitelistMails", "WhitelistMails_Copy", transaction);
                     CopyTableDataBulkTransaction("Parkings", "Parkings_Copy", transaction);
+                    CopyTableDataBulkTransaction("Vtk", "Vtk_Copy", transaction);
 
                     DropTableTransaction("Users", transaction);
                     DropTableTransaction("WhitelistMails", transaction);
                     DropTableTransaction("Parkings", transaction);
+                    DropTableTransaction("Vtk", transaction);
 
                     CreateTableTransaction(SequelTables.Users_Table("Users"), "Users", transaction);
                     CreateTableTransaction(SequelTables.WhitelistMails("WhitelistMails"), "WhitelistMails", transaction);
                     CreateTableTransaction(SequelTables.Parkings("Parkings"), "Parkings", transaction);
+                    CreateTableTransaction(SequelTables.Vtk("Vtk"), "Vtk", transaction);
 
                     CopyTableDataBulkTransaction("Users_Copy", "Users", transaction);
                     CopyTableDataBulkTransaction("WhitelistMails_Copy", "WhitelistMails", transaction);
                     CopyTableDataBulkTransaction("Parkings_Copy", "Parkings", transaction);
+                    CopyTableDataBulkTransaction("Vtk_Copy", "Vtk", transaction);
+
 
                     DropTableTransaction("Users_Copy", transaction);
                     DropTableTransaction("WhitelistMails_Copy", transaction);
                     DropTableTransaction("Parkings_Copy", transaction);
+                    DropTableTransaction("Vtk_Copy", transaction);
 
                     SetForeingKeyCheckTransaction(1, transaction);
 

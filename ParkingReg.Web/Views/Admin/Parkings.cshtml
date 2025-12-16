@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Active Parkings</h1>
+    <div id="parkingCont"></div>
+</div>
+
+<style>
+    .parkingDiv {
+        border: dotted black 2px;
+        display:block;
+        margin:10px;
+        padding:5px;
+        text-align:left;
+    }
+</style>
+<script>
+    const parkingCont = document.getElementById('parkingCont');
+
+    async function fetchParkings() {
+        const resp = await fetch('/admin/GetActiveParkings');
+        const respdata = await resp.json();
+        if (!respdata.success) return;
+
+        const parkings = respdata.data;
+        if (parkings.length === 0) return;
+
+        HTMLString = "";
+        parkings.forEach((prk) => {HTMLString += ParkingHtml(prk)});
+        parkingCont.innerHTML = HTMLString;
+    }
+
+    window.onload = () => {
+        setInterval(fetchParkings, 200);
+    };
+
+    function ParkingHtml(prk) {
+        return `<div class='emailDiv'>
+            <h4>${prk.regnr}</h4>
+            <h4>${prk.email}</h4>
+            <p>${prk.fromDate}</p>
+            <p>${prk.toDate}</p>
+        </div>`;
+    }
+</script>
+

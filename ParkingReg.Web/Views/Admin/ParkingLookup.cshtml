@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Active Parkings</h1>
+    <input type="text" placeholder="skilt nr" onkeyup="fetchParkings(this.value)"/>
+    <div id="parkingCont"></div>
+</div>
+
+<style>
+    .parkingDiv {
+        border: dotted black 2px;
+        display:block;
+        margin:10px;
+        padding:5px;
+        text-align:left;
+    }
+</style>
+<script>
+    const parkingCont = document.getElementById('parkingCont');
+    
+
+    async function fetchParkings(regnr) {
+        parkingCont.style.backgroundColor = `rgb(255,255,255)`;
+        const resp = await fetch('/admin/ParkingLookup?regnr=' + regnr);
+        const respdata = await resp.json();
+        if (!respdata.success) parkingCont.innerHTML = "No parking found for " + regnr;
+
+        const parkings = respdata.data;
+
+        parkingCont.innerHTML = ParkingHtml(parkings)
+        let red = +parkings.active * 255;
+        parkingCont.children[0].style.backgroundColor = `rgb(${red},100,100)`;
+    }
+    
+
+    
+
+    function ParkingHtml(prk) {
+        return `<div class='emailDiv'>
+            <h4>${prk.regnr}</h4>
+            <h4>${prk.name}</h4>
+            <h4>${prk.email}</h4>
+            <p>${prk.fromDate}</p>
+            <p>${prk.toDate}</p>
+            <p>Active: ${prk.active}</p>
+        </div>`;
+    }
+</script>
+

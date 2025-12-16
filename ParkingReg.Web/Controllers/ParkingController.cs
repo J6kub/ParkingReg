@@ -73,7 +73,14 @@ public class ParkingController : Controller
             if (!seq.HasValidParking(regnr))
             {
                 FetchCarInfo fetchCarInfo = new FetchCarInfo();
-                vtk.CarInfo = await fetchCarInfo.GetCarInfoAsync(regnr);
+                try
+                {
+                    vtk.CarInfo = await fetchCarInfo.GetCarInfoAsync(regnr);
+                } catch
+                {
+                    vtk.CarInfo = "Ukjent bil";
+                }
+                
                 vtk.Regnr = regnr;
                 return View("ChoosePark",vtk);
             } else

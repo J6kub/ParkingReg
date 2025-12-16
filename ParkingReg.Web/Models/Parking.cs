@@ -11,6 +11,7 @@ namespace ParkingReg.Web.Models
         public DateTime ToDate { get; set; }
         public bool Active { get; set; }
 
+        public Parking() { }
         // Constructor that maps a MySqlDataReader to this object
         public Parking(MySqlDataReader reader)
         {

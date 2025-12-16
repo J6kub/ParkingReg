@@ -20,14 +20,13 @@ services:
       dockerfile: Dockerfile
     container_name: parkingreg_webapp
     ports:
-      - "8080:80"   # maps container port 80 to host 8080
+      - "5050:5050"   # host:container
     depends_on:
       - mariadb
     environment:
       DATABASE_IP: mariadb
       DATABASE_PORT: 3306
       DATABASE_PASSWORD: mysecretpassword
-      # Optional: your EF connection string if you use one
       ConnectionStrings__DefaultConnection: "Server=mariadb;Database=ParkingReg;User=root;Password=mysecretpassword;"
     restart: always
 

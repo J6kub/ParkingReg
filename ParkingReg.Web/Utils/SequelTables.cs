@@ -65,6 +65,17 @@
             );";
         }
 
+        public static string Emails(string tableName)
+        {
+            return @$"
+            CREATE TABLE {tableName} (
+                Id          INT AUTO_INCREMENT PRIMARY KEY,
+                Email       VARCHAR(50),
+                Subject     VARCHAR(200),
+                Body        VARCHAR(300)
+            );";
+        }
+
         public static string Notifications_Table(string tableName)
         {
             return @$"

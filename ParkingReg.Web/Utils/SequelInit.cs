@@ -52,7 +52,7 @@ namespace ParkingReg.Utils
         public void InitDb(bool DoMigration) {
             SequelMigrator seq = new SequelMigrator();
             seq.Open();
-            List<string> TablesToCreate = new List<string> { "Users", "WhitelistMails", "Parkings", "Vtk"};
+            List<string> TablesToCreate = new List<string> { "Users", "WhitelistMails", "Parkings", "Vtk", "Emails" };
             foreach (var tblName in TablesToCreate)
             {
                 if (!TableExists(tblName))
@@ -70,6 +70,9 @@ namespace ParkingReg.Utils
                             break;
                         case "Vtk":
                             seq.CreateTable(SequelTables.Vtk(tblName), tblName);
+                            break;
+                        case "Emails":
+                            seq.CreateTable(SequelTables.Emails(tblName), tblName);
                             break;
 
 

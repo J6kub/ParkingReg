@@ -19,7 +19,7 @@ public class ParkingController : Controller
             int emailId = seq.GetWhitelistEmailId(email);
             SequelVtk seqvtk = new SequelVtk();
             seqvtk.GenerateVtk(emailId);
-            return Json(new GeneralResponse(true, "Email sent"));
+            return View("EmailSent", HEM);
         }
         return Json(new GeneralResponse(false, "Failed, invalid email"));
     }
@@ -34,7 +34,14 @@ public class ParkingController : Controller
             PR.EmailId = vtk.EmailId;
             SequelWhitelistEmail seqWLE = new SequelWhitelistEmail();
             string email = seqWLE.GetWhitelistEmail(PR.EmailId);
-            seq.SubmitParking(PR);
+            try
+            {
+                seq.SubmitParking(PR);
+            } catch
+            {
+                return View("ParkingRejected");
+            }
+            
             Parking prk = seq.GetParking(PR.Regnr);
             EmailHandler.SendEmail(email, "Park registered", $"Yo parking fo car {PR.Regnr} was registered");
             seqvtk.InvalidateVtks(PR.EmailId);
@@ -53,6 +60,10 @@ public class ParkingController : Controller
         {
             SequelVtk seqvtk = new SequelVtk();
             Vtk vtk = seqvtk.GetVtkByToken(t);
+            if (vtk == null)
+            {
+                return Json(new GeneralResponse(false, "Invalid token"));
+            }
             SequelParkReg seq = new SequelParkReg();
             if (!seq.HasValidParking(regnr))
             {
@@ -61,7 +72,7 @@ public class ParkingController : Controller
             } else
             {
                 Parking park = seq.GetParking(regnr);
-                return Json(park);
+                return View("AlreadyParked", park);
             }
 
 

@@ -1,5 +1,6 @@
 ﻿using MySql.Data;
 using MySql.Data.MySqlClient;
+using ParkingReg.Web.Models;
 namespace ParkingReg.Utils
 {
 
@@ -19,6 +20,19 @@ namespace ParkingReg.Utils
                 cmd.Parameters.AddWithValue("@mail", mail);
                 cmd.ExecuteNonQuery();
             }
+        }
+        public void AddWhiteListedMail(WhiteListEmailModel WLEM)
+        {
+            Open();
+            string query = "INSERT INTO WhitelistMails (Email, Address, Name) VALUES (@mail, @adress, @name);";
+            using (var cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@mail", WLEM.Email);
+                cmd.Parameters.AddWithValue("@adress", WLEM.Address);
+                cmd.Parameters.AddWithValue("@name", WLEM.Name);
+                cmd.ExecuteNonQuery();
+            }
+            Dispose();
         }
 
     }

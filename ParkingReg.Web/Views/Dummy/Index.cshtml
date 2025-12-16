@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">emails</h1>
+    <div id="emailCont"></div>
+</div>
+
+<style>
+    .emailDiv {
+        border: dotted black 2px;
+        display:block;
+        margin:10px;
+        padding:5px;
+        text-align:left;
+    }
+</style>
+<script>
+    const emailCont = document.getElementById('emailCont');
+    let lastNewestSignature = null;
+
+    async function fetchEmails() {
+        const resp = await fetch('/dummy/getemails');
+        const respdata = await resp.json();
+        if (!respdata.success) return;
+
+        const emails = respdata.data;
+        if (emails.length === 0) return;
+
+        // Compare newest email only
+        const newest = emails[0];
+        const signature = `${newest.email}|${newest.subject}|${newest.body}`;
+
+        // If newest email is unchanged, do nothing
+        if (signature === lastNewestSignature) return;
+
+        lastNewestSignature = signature;
+
+        // Re-render only when newest changes
+        emailCont.innerHTML = '';
+        emails.forEach(email => {
+            emailCont.innerHTML += EmailHtml(email);
+        });
+    }
+
+    window.onload = () => {
+        setInterval(fetchEmails, 200);
+    };
+
+    function EmailHtml(email) {
+        return `<div class='emailDiv'>
+            <h4>${email.email}</h4>
+            <h4>${email.subject}</h4>
+            <p>${email.body}</p>
+        </div>`;
+    }
+</script>
+

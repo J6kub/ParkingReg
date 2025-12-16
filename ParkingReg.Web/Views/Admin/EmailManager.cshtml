@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Whitelisted Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Add Email to Whitelist</h2>
+
+    <form id="emailForm">
+        <label>
+            Name:
+            <input type="text" id="Name" required />
+        </label>
+
+        <label>
+            Address:
+            <input type="text" id="Address" required />
+        </label>
+
+        <label>
+            Email:
+            <input type="email" id="Email" required />
+        </label>
+
+        <br>
+        <button type="submit">Add Email</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        document.getElementById("emailForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const data = {
+                Name: document.getElementById("Name").value,
+                Address: document.getElementById("Address").value,
+                Email: document.getElementById("Email").value,
+                Id:0,
+                Active:true
+            };
+
+            fetch("/Admin/AddEmail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(result => {
+                const output = document.getElementById("result");
+
+                if (result.success) {
+                    output.style.color = "green";
+                    output.textContent = result.message;
+                    document.getElementById("emailForm").reset();
+                } else {
+                    output.style.color = "red";
+                    output.textContent = result.message;
+                }
+            })
+            .catch(() => {
+                const output = document.getElementById("result");
+                output.style.color = "red";
+                output.textContent = "Something went wrong";
+            });
+        });
+    </script>
+
+</body>
+</html>

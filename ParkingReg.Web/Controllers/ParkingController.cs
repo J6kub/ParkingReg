@@ -18,13 +18,18 @@ public class ParkingController : Controller
         {
             int emailId = seq.GetWhitelistEmailId(email);
             SequelVtk seqvtk = new SequelVtk();
-            seqvtk.GenerateVtk(emailId);
+            var request = HttpContext.Request;
+            string baseUrl = $"{request.Scheme}://{request.Host}";
+            seqvtk.GenerateVtk(emailId, baseUrl);
             return View("EmailSent", HEM);
         }
         return Json(new GeneralResponse(false, "Failed, invalid email"));
     }
     public IActionResult HandlePark([FromForm] ParkReq PR)
     {
+        if (!DateTimeHelper.ValidateTime(PR.Duration))
+            return View("ParkingRejected");
+
         SequelParkReg seq = new SequelParkReg();
         if (!seq.HasValidParking(PR.Regnr))
         {
@@ -54,7 +59,7 @@ public class ParkingController : Controller
     }
     
     [HttpGet]
-    public IActionResult Index(string t = null, string regnr = null)
+    public async Task<IActionResult> Index(string t = null, string regnr = null)
     {
         if (!string.IsNullOrEmpty(regnr) && !string.IsNullOrEmpty(t))
         {
@@ -67,6 +72,8 @@ public class ParkingController : Controller
             SequelParkReg seq = new SequelParkReg();
             if (!seq.HasValidParking(regnr))
             {
+                FetchCarInfo fetchCarInfo = new FetchCarInfo();
+                vtk.CarInfo = await fetchCarInfo.GetCarInfoAsync(regnr);
                 vtk.Regnr = regnr;
                 return View("ChoosePark",vtk);
             } else

@@ -1,22 +1,48 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@Model Models.Vtk
+@model ParkingReg.Web.Models.Vtk
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    
-    <form method="POST" action="/parking/handlepark">
+    <h2>Hvor lenge vil du parkere kjøretøyet med regnr: <b>@Model.Regnr</b></h2>
+    <p id="carInfo">@Model.CarInfo</p>
+    <form method="POST" action="/parking/handlepark" style="display:none">
 
         <input name="Token" value="@Model.Token" type="text" />
         <input name="Regnr" value="@Model.Regnr" type="text" />
-        <input name="Duration" value="2D_1HR" type="text" />
+        <input id="timeInput" name="Duration" value="2D_1HR" type="text" />
         <input type="submit"/>
     </form>
-    <button>6 hr</button>
-    <button>3 days</button>
+    <button onclick="submitForm('0D_6HR')">6 Timer</button>
+    <button onclick="submitForm('3D_0HR')">3 Dager</button>
+    <button onclick="backToPlate()">Tilbake</button>
 </div>
 <script>
-	
+	const form = document.querySelector('form');
+    const timeInput = document.getElementById('timeInput');
+    const carInfo = document.getElementById('carInfo');
+    function submitForm(duration) {
+        timeInput.value = duration;
+        form.submit();
+    }
+    function backToPlate() {
+        token = form.Token.value;
+        location.href = location.href.split("&")[0];
+    }
+
+    async function FetchCarInfo(regnr) {
+        const resp = await fetch(`https://kjoretoyoppslag.atlas.vegvesen.no/ws/no/vegvesen/kjoretoy/kjoretoyoppslag/v2/oppslag/raw/${regnr}`);
+        if (resp) {
+            const data = await resp.json();
+            
+            const make = data.kjoretoy.godkjenning.tekniskGodkjenning.tekniskeData.generelt.handelsbetegnelse[0];
+            const color = data.kjoretoy.godkjenning.tekniskGodkjenning.tekniskeData.karosseriOgLasteplan.rFarge[0].kodeNavn;
+            const year = data.kjoretoy.godkjenning.tekniskGodkjenning.gyldigFraDato.split('-')[0];
+
+            carInfo.innerHTML = `${color} ${make} ${year}`;
+        }
+    }
+    //window.onload = async() => {await FetchCarInfo(form.Regnr.value)};
 
 </script>

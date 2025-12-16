@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@Model Models.Vtk
+@model ParkingReg.Web.Models.Vtk
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Skriv inn skilt nummer til bilen</h1>
     <input id="regnri" type="text" placeholder="Reg nummer"/>
     <input id="tkn" value="@Model.Token" type="text" hidden />
     <button onclick="nextto()">Videre</button>

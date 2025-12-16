@@ -1,13 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@Model Models.Parking
+@model ParkingReg.Web.Models.Parking
 
 <div class="text-center">
     <h1 class="display-4">Hello</h1>
-    <h2>@Model.Regnr has valid parking!</h2>
-    <p>From @Model.FromDate</p>
-    <p>To @Model.ToDate</p>
+    <h2>@Model.Regnr er allerede registrert</h2>
+    <p>Fra @Model.FromDate</p>
+    <p>Til @Model.ToDate</p>
+    <a asp-controller="parking" asp-action="index"><button>Tilbake</button></a>
 </div>
 <script>
 	

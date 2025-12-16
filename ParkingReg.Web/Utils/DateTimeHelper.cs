@@ -30,5 +30,13 @@ namespace ParkingReg.Web.Utils
 
             return DateTime.Now.AddDays(days).AddHours(hours);
         }
+        public static bool ValidateTime(string d8) {
+            List<string> ValidTimes = new List<string> { "3D_0HR", "1D_0HR", "0D_3HR", "0D_6HR" };
+            if (ValidTimes.Contains(d8))
+                return true;
+            else 
+                return false;
+
+        }
     }
 }

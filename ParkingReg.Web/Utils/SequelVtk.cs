@@ -12,7 +12,7 @@ namespace ParkingReg.Utils
         public SequelVtk(string dbIP, string dbname) : base(dbIP, dbname) { }
         public SequelVtk() : base() { }
 
-        public void GenerateVtk(int emailid)
+        public void GenerateVtk(int emailid, string BaseUrl)
         {
             Open();
             bool SuccessfulInsert = false;
@@ -34,7 +34,7 @@ namespace ParkingReg.Utils
             SequelWhitelistEmail seqwle = new SequelWhitelistEmail();
             string email = seqwle.GetWhitelistEmail(emailid);
             seqwle.Dispose();
-            EmailHandler.SendEmail(email, "Parkering thing", $"please klikk link http://localhost:5179/Parking?t={tkn}");
+            EmailHandler.SendEmail(email, "Parkering thing", $"please klikk link {BaseUrl}/Parking?t={tkn}");
 
         }
         public void InvalidateVtks(int emailid)

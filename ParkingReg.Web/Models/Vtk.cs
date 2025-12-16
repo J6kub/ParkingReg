@@ -7,5 +7,6 @@
         public string Token { get; set; }
         public bool Valid { get; set; }
         public string Regnr { get; set; }
+        public string CarInfo { get; set; }
     }
 }
